@@ -13,9 +13,10 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectEbooks, Ebook, fetchEbooks } from './itunesSlice';
+import { selectEbooks, Ebook, fetchEbooks, selectFavoriteEbooks, addToFavorite, fetchFavoriteEbooks } from './itunesSlice';
 
 export function EbookTable({ ebooks }: { ebooks: Ebook[] }) {
+  const dispatch = useDispatch();
   return (
     <Table variant="simple">
       <TableCaption>Imperial to metric conversion factors</TableCaption>
@@ -29,7 +30,7 @@ export function EbookTable({ ebooks }: { ebooks: Ebook[] }) {
       </Thead>
       <Tbody>
         {ebooks.map((ebook) => (
-          <Tr key={ebook.trackId}>
+          <Tr key={ebook.trackId} onDoubleClick={() => dispatch(addToFavorite(ebook))}>
             <Td>
               <Image src={ebook.artworkUrl100} alt="Segun Adebayo" />
             </Td>
@@ -47,6 +48,8 @@ export function EbookTable({ ebooks }: { ebooks: Ebook[] }) {
 
 export function Itunes() {
   const ebooks = useSelector(selectEbooks);
+  const favoriteEbooks = useSelector(selectFavoriteEbooks);
+
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState('');
   return (
@@ -61,6 +64,12 @@ export function Itunes() {
           onClick={() => dispatch(fetchEbooks(searchTerm))}
         >
           Search
+        </Button>
+        <Button
+          colorScheme="blue"
+          onClick={() => dispatch(fetchFavoriteEbooks())}
+        >
+          ShowFavorite
         </Button>
       </Stack>
       <EbookTable ebooks={ebooks} />

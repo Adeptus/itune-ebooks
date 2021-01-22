@@ -9,8 +9,8 @@ const ebookSchema = yup.object({
   trackName: yup.string().defined(),
   artistName: yup.string().defined(),
   formattedPrice: yup.string().defined(),
-  averageUserRating: yup.number().defined(),
-  userRatingCount: yup.number().defined(),
+  averageUserRating: yup.number(),
+  userRatingCount: yup.number(),
 });
 
 type ApiEbook = yup.InferType<typeof ebookSchema>;
