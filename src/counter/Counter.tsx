@@ -1,7 +1,12 @@
 import { Button, Stack, Tag } from '@chakra-ui/react';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { decCount, incCount, selectCount } from './counterSlice';
+import {
+  decCount,
+  incCount,
+  incCountDelayed,
+  selectCount,
+} from './counterSlice';
 
 // LEGACY
 // export class Counter extends React.Component {
@@ -68,6 +73,9 @@ export function Counter() {
       </Button>
       <Button colorScheme="green" onClick={() => dispatch(incCount(1))}>
         +1
+      </Button>
+      <Button colorScheme="blue" onClick={() => dispatch(incCountDelayed(1))}>
+        +1 (after 1s)
       </Button>
     </Stack>
   );
